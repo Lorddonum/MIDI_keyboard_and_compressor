@@ -25,11 +25,13 @@
 #define WINDOW_WIDTH 1200
 #define WINDOW_HEIGHT 800
 
+struct settings {
+
+};
+
 static void keyboard(struct nk_context *ctx) {
   if (nk_begin(ctx, "keyboard", nk_rect(10, 10, 180, 250),
                NK_WINDOW_BORDER | NK_WINDOW_NO_SCROLLBAR | NK_WINDOW_MOVABLE)) {
-    static int set = 0, prev = 0, op = 0;
-    static const char number[] = "123456789";
   }
   nk_end(ctx);
 }
@@ -163,8 +165,6 @@ int main(int argc, char *argv[]) {
       nk_sdl_handle_event(&evt);
     }
     nk_input_end(ctx);
-
-    /* GUI */
 
     settings(ctx, bg);
 
