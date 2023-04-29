@@ -145,8 +145,6 @@ void loop() {
     pulseK = pulseWidth - pulseWidthMin;
   }
 
-  // this is so tiresome i wish i could sleep
-
   else if (digitalRead(A1) == LOW) {
     if (freq != Db3)
       trg = 1;
@@ -189,10 +187,6 @@ void loop() {
     if (trg == 1)
       digitalWrite(A0, HIGH);
     digitalWrite(A0, LOW);
-
-    // anwli khedam f drb ghllf w79 rb but i think we gotta change this shit i
-    // pulled most of it online and didnt bother renaming shit
-
     trg = 0;
     freq = Bb2;
     period = 50000 / freq;
@@ -278,7 +272,7 @@ void loop() {
     pulseK = pulseWidth - pulseWidthMin;
   }
 
-  // ok ginkoe helped at last
+  // got lots of help
 
   else if (digitalRead(3) == LOW) {
     if (freq != Eb2)
@@ -339,8 +333,4 @@ void loop() {
   }
 }
 
-// what a good cute final else to end this fucking mess with and istg i refuse
-// to fucking stylize all that shit fuck you and fuck your mom and fuck prof and
-// fuck musk and fuck jk rowling and fuck my dad and fuck your dad and fuck
-// anyone who does not give me money for free daily i hope i could just die
-// instead of go through this fucking mess every single day. go back to line 200
+// what an adorable final else 
