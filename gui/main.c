@@ -129,6 +129,33 @@ static void player(struct nk_context *ctx) {
   if (nk_begin(ctx, "Player", nk_rect(10, 10, 180, 250),
                NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_NO_SCROLLBAR |
                    NK_WINDOW_TITLE)) {
+    static float volume = 1.0f;
+
+    struct icon {
+      struct nk_image full_volume;
+      struct nk_image mid_volume;
+      struct nk_image low_volume;
+      struct nk_image muted_volume;
+    };
+
+    // icon indicator
+    nk_layout_row_begin(ctx, NK_STATIC, 40, 10);
+    if (volume == 0) {                         // muted
+    } else if (volume < 0.3) {                 // low_volume
+    } else if (volume > 0.3 && volume < 0.7) { // mid_volume
+    } else if (volume > 0.7) {                 // full_volume
+    }
+    // nk_tree_state_image_push(ctx, NK_TREE_TAB, icon.full_volume, const char *title, enum nk_collapse_states *state)
+    nk_layout_row_end(ctx);
+    // volume slider
+    nk_layout_row_begin(ctx, NK_STATIC, 30, 2);
+    {
+      nk_layout_row_push(ctx, 50);
+      nk_label(ctx, "Volume:", NK_TEXT_LEFT);
+      nk_layout_row_push(ctx, 110);
+      nk_slider_float(ctx, 0, &volume, 1.0f, 0.1f);
+    }
+    nk_layout_row_end(ctx);
   }
   nk_end(ctx);
 }
@@ -137,23 +164,25 @@ static void settings(struct nk_context *ctx, struct nk_colorf bg) {
   if (nk_begin(ctx, "Settings", nk_rect(50, 50, 230, 250),
                NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_SCALABLE |
                    NK_WINDOW_MINIMIZABLE | NK_WINDOW_TITLE)) {
-    enum { EASY, HARD };
-    static int op = EASY;
+    enum { ON, OFF };
+    static int op = ON;
     static int property = 20;
 
     nk_layout_row_static(ctx, 30, 80, 1);
-    if (nk_button_label(ctx, "button"))
-      fprintf(stdout, "button pressed\n");
+    if (nk_button_label(ctx, "Connect")) {
+      fprintf(stdout, "Connection to the board attempted\n");
+      // TODO: add real connection logic here
+    }
     nk_layout_row_dynamic(ctx, 30, 2);
-    if (nk_option_label(ctx, "easy", op == EASY))
-      op = EASY;
-    if (nk_option_label(ctx, "hard", op == HARD))
-      op = HARD;
+    if (nk_option_label(ctx, "on", op == ON))
+      op = ON;
+    if (nk_option_label(ctx, "off", op == OFF))
+      op = ON;
     nk_layout_row_dynamic(ctx, 25, 1);
-    nk_property_int(ctx, "Compression:", 0, &property, 100, 10, 1);
+    nk_property_int(ctx, "Compression rate:", 0, &property, 100, 10, 1);
 
     nk_layout_row_dynamic(ctx, 20, 1);
-    nk_label(ctx, "background:", NK_TEXT_LEFT);
+    nk_label(ctx, "Background:", NK_TEXT_LEFT);
     nk_layout_row_dynamic(ctx, 25, 1);
     if (nk_combo_begin_color(ctx, nk_rgb_cf(bg),
                              nk_vec2(nk_widget_width(ctx), 400))) {
@@ -256,10 +285,11 @@ int main(int argc, char *argv[]) {
     }
     nk_input_end(ctx);
 
+    /* settings component */
     settings(ctx, bg);
-
+    /* midi keyboard component */
     keyboard(ctx);
-
+    /* player controls component */
     player(ctx);
 
     SDL_SetRenderDrawColor(renderer, bg.r * 255, bg.g * 255, bg.b * 255,
