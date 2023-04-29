@@ -75,7 +75,7 @@ static void keyboard(struct nk_context *ctx) {
   struct nk_canvas canvas;
   if (canvas_begin(ctx, &canvas, "keyboard",
                    NK_WINDOW_BORDER | NK_WINDOW_MOVABLE | NK_WINDOW_TITLE, 10,
-                   10, 1190, 700, nk_rgb(250, 250, 250))) {
+                   10, 1700, 700, nk_rgb(250, 250, 250))) {
     float x = canvas.painter->clip.x, y = canvas.painter->clip.y;
 
     /* white keys */
@@ -93,6 +93,12 @@ static void keyboard(struct nk_context *ctx) {
                  nk_rgb(255, 255, 255));
     nk_fill_rect(canvas.painter, nk_rect(x + 1020, y, 170, 700), 5,
                  nk_rgb(255, 255, 255));
+    nk_fill_rect(canvas.painter, nk_rect(x + 1190, y, 170, 700), 5,
+                 nk_rgb(255, 255, 255));
+    nk_fill_rect(canvas.painter, nk_rect(x + 1360, y, 170, 700), 5,
+                 nk_rgb(255, 255, 255));
+    nk_fill_rect(canvas.painter, nk_rect(x + 1530, y, 170, 700), 5,
+                 nk_rgb(255, 255, 255));
 
     /* borders */
     nk_stroke_rect(canvas.painter, nk_rect(x, y - 2, 170, 700), 2, 2,
@@ -109,17 +115,27 @@ static void keyboard(struct nk_context *ctx) {
                    nk_rgb(136, 136, 136));
     nk_stroke_rect(canvas.painter, nk_rect(x + 1019, y - 2, 170, 700), 2, 2,
                    nk_rgb(136, 136, 136));
+    nk_stroke_rect(canvas.painter, nk_rect(x + 1189, y - 2, 170, 700), 2, 2,
+                   nk_rgb(136, 136, 136));
+    nk_stroke_rect(canvas.painter, nk_rect(x + 1359, y - 2, 170, 700), 2, 2,
+                   nk_rgb(136, 136, 136));
+    nk_stroke_rect(canvas.painter, nk_rect(x + 1529, y - 2, 170, 700), 2, 2,
+                   nk_rgb(136, 136, 136));
 
     /* black keys */
     nk_fill_rect(canvas.painter, nk_rect(x + 130, y, 80, 350), 2,
                  nk_rgb(16, 12, 8));
     nk_fill_rect(canvas.painter, nk_rect(x + 130 + 170, y, 80, 350), 2,
                  nk_rgb(16, 12, 8));
-    nk_fill_rect(canvas.painter, nk_rect(x + 130 + 170 * 2, y, 80, 350), 2,
+    nk_fill_rect(canvas.painter, nk_rect(x + 130 + 170 * 3, y, 80, 350), 2,
                  nk_rgb(16, 12, 8));
     nk_fill_rect(canvas.painter, nk_rect(x + 130 + 170 * 4, y, 80, 350), 2,
                  nk_rgb(16, 12, 8));
     nk_fill_rect(canvas.painter, nk_rect(x + 130 + 170 * 5, y, 80, 350), 2,
+                 nk_rgb(16, 12, 8));
+    nk_fill_rect(canvas.painter, nk_rect(x + 130 + 170 * 7, y, 80, 350), 2,
+                 nk_rgb(16, 12, 8));
+    nk_fill_rect(canvas.painter, nk_rect(x + 130 + 170 * 8, y, 80, 350), 2,
                  nk_rgb(16, 12, 8));
   }
   canvas_end(ctx, &canvas);
@@ -145,7 +161,6 @@ static void player(struct nk_context *ctx) {
     } else if (volume > 0.3 && volume < 0.7) { // mid_volume
     } else if (volume > 0.7) {                 // full_volume
     }
-    // nk_tree_state_image_push(ctx, NK_TREE_TAB, icon.full_volume, const char *title, enum nk_collapse_states *state)
     nk_layout_row_end(ctx);
     // volume slider
     nk_layout_row_begin(ctx, NK_STATIC, 30, 2);
